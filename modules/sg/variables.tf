@@ -3,7 +3,7 @@ variable "vpc_id" {
   type = string
 }
 
-variable "egress_server" {
+variable "server_egress" {
   description = "The egress rules of the server"
   type = map(object({
     description = string
@@ -14,7 +14,7 @@ variable "egress_server" {
   }))
 }
 
-variable "ingress_server" {
+variable "server_ingress" {
   description = "The ingress rules of the server"
   type = map(object({
     description = string
@@ -25,7 +25,7 @@ variable "ingress_server" {
   }))
 }
 
-variable "egress_lb" {
+variable "lb_egress" {
   description = "The egress rules of the load balancer"
   type = map(object({
     description = string
@@ -36,7 +36,7 @@ variable "egress_lb" {
   }))
 }
 
-variable "ingress_lb" {
+variable "lb_ingress" {
   description = "The ingress rules of the load balancer"
   type = map(object({
     description = string

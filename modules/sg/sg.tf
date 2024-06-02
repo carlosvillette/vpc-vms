@@ -2,7 +2,7 @@ resource "aws_security_group" "server_sg" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_server
+    for_each = var.server_ingress
 
     content {
         description = ingress.value.description
@@ -14,7 +14,7 @@ resource "aws_security_group" "server_sg" {
   }
 
   dynamic "egress" {
-    for_each = var.egress_server
+    for_each = var.server_egress
 
     content {
       description = egress.value.description
@@ -34,7 +34,7 @@ resource "aws_security_group" "load_balancer_sg" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_lb
+    for_each = var.lb_ingress
 
     content {
         description = ingress.value.description
@@ -46,7 +46,7 @@ resource "aws_security_group" "load_balancer_sg" {
   }
 
   dynamic "egress" {
-    for_each = var.egress_lb
+    for_each = var.lb_egress
 
     content {
       description = egress.value.description
