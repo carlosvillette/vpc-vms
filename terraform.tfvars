@@ -85,11 +85,9 @@ public_subnets_tags = {
 
 image_id = "ami-0a70b9d193ae8a799"
 
-instance_name = "LinuxBox"
+instance_name = "MyLinuxBox"
 
 instance_type = "t2.micro"
-
-user_data = file("startupScript.sh")
 
 lt_tags = {
     Name = "LoadBalancer"
