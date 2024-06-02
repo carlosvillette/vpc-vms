@@ -7,7 +7,7 @@ resource "aws_autoscaling_group" "this" {
   health_check_type          = "ELB"
   health_check_grace_period  = 300
   force_delete               = true
-  target_group_arns          = var.target_group_arns
+  target_group_arns          = [var.target_group_arn]
 
   launch_template {
     id      = var.launch_template_id
@@ -68,5 +68,5 @@ resource "aws_autoscaling_policy" "this" {
 # Enabling instance scale-in protection
 resource "aws_autoscaling_attachment" "this" {
   autoscaling_group_name = aws_autoscaling_group.this.name
-  alb_target_group_arn   = var.target_group_arn
+  lb_target_group_arn   = var.target_group_arn #alb_target_group_arn is deprecated this is not an error even if the IDE says so
 }

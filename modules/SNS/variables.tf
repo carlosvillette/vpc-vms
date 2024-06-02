@@ -1,6 +1,6 @@
 variable "email" {
   description = "the email to send the SNS notification"
-  default = string
+  type = string
 }
 
 variable "group_names" {
