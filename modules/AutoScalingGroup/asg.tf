@@ -1,11 +1,11 @@
 resource "aws_autoscaling_group" "this" {
   name_prefix           = "app1-auto-scaling-group-"
-  min_size              = 3
-  max_size              = 15
-  desired_capacity      = 6
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.desired_capacity
   vpc_zone_identifier   = var.subnet_ids
   health_check_type          = "ELB"
-  health_check_grace_period  = 300
+  health_check_grace_period  = var.health_check_grace_period
   force_delete               = true
   target_group_arns          = [var.target_group_arn]
 
@@ -21,7 +21,7 @@ resource "aws_autoscaling_group" "this" {
     name                  = "instance-protection-launch"
     lifecycle_transition  = "autoscaling:EC2_INSTANCE_LAUNCHING"
     default_result        = "CONTINUE"
-    heartbeat_timeout     = 60
+    heartbeat_timeout     = var.heartbeat_timeout_launch
     notification_metadata = "{\"key\":\"value\"}"
   }
 
@@ -30,7 +30,7 @@ resource "aws_autoscaling_group" "this" {
     name                  = "scale-in-protection"
     lifecycle_transition  = "autoscaling:EC2_INSTANCE_TERMINATING"
     default_result        = "CONTINUE"
-    heartbeat_timeout     = 300
+    heartbeat_timeout     = var.heartbeat_timeout_terminate
   }
 
   tag {
@@ -55,13 +55,13 @@ resource "aws_autoscaling_policy" "this" {
   autoscaling_group_name = aws_autoscaling_group.this.name
 
   policy_type = "TargetTrackingScaling"
-  estimated_instance_warmup = 120
+  estimated_instance_warmup = var.estimated_instance_warmup
 
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
-    target_value = 75.0
+    target_value = var.target_value
   }
 }
 
